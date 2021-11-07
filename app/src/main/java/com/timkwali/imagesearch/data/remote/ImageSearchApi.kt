@@ -1,7 +1,7 @@
-package com.timkwali.data.remote
+package com.timkwali.imagesearch.data.remote
 
-import com.timkwali.common.utils.Constants
 import com.timkwali.data.remote.dto.ImageSearchDto
+import com.timkwali.imagesearch.common.Constants
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

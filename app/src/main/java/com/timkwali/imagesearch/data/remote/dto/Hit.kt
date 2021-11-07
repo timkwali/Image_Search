@@ -1,4 +1,4 @@
-package com.timkwali.data.remote.dto
+package com.timkwali.imagesearch.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
