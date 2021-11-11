@@ -1,6 +1,6 @@
 package com.timkwali.imagesearch.di
 
-
+import com.timkwali.imagesearch.data.localdata.ImageDatabase
 import com.timkwali.imagesearch.data.remote.ImageSearchApi
 import com.timkwali.imagesearch.data.repository.ImageSearchRepository
 import com.timkwali.imagesearch.domain.repository.ImageSearchRepositoryImpl
@@ -28,9 +28,16 @@ object NetworkModule {
         return retrofit.create(ImageSearchApi::class.java)
     }
 
+//    @Provides
+//    @Singleton
+//    fun provideRepository(apiService: ImageSearchApi): ImageSearchRepository {
+//        return ImageSearchRepositoryImpl(apiService)
+//    }
+
     @Provides
     @Singleton
-    fun provideRepository(apiService: ImageSearchApi): ImageSearchRepository {
-        return ImageSearchRepositoryImpl(apiService)
+    fun provideRepository(apiService: ImageSearchApi, db: ImageDatabase): ImageSearchRepository {
+        return ImageSearchRepositoryImpl(apiService, db.imageItemDao)
     }
+
 }

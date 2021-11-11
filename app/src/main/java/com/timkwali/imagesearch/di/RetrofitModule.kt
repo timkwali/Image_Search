@@ -1,6 +1,6 @@
-package com.timkwali.imagesearchapp.di
+package com.timkwali.imagesearch.di
 
-import com.timkwali.common.utils.Constants
+import com.timkwali.imagesearch.common.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

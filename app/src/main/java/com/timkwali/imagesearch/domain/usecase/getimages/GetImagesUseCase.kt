@@ -1,46 +1,59 @@
 package com.timkwali.imagesearch.domain.usecase.getimages
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.timkwali.imagesearch.common.Constants
 import com.timkwali.imagesearch.common.HandleErrorResponse
 import com.timkwali.imagesearch.common.Resource
 import com.timkwali.imagesearch.data.repository.ImageSearchRepository
 import com.timkwali.imagesearch.domain.model.ImageItem
+import com.timkwali.imagesearch.domain.model.ResponseModel
 import com.timkwali.imagesearch.domain.model.toImageItem
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import io.reactivex.Observable
 
+
 class GetImagesUseCase @Inject constructor(
     private val repository: ImageSearchRepository
 ) {
-    private lateinit var observable:  Observable<Resource<List<ImageItem>?>>
-    private lateinit var resource: Resource<List<ImageItem>?>
 
     @SuppressLint("CheckResult")
-    operator fun invoke(searchQuery: String) : Observable<Resource<List<ImageItem>?>> {
-        observable = Observable.just(Resource.Loading(null))
-        repository.searchImages(searchQuery)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    resource = if(it.code() == Constants.successCode) {
-                        val imageList = it.body()?.hits?.map { it.toImageItem() }
-                        Resource.Success(imageList)
-                    } else {
-                        val message = HandleErrorResponse.setErrorMessage(it.code())
-                        Resource.Error(message, null)
-                    }
-                    observable = Observable.just(resource)
-                },
-                {
-                    resource = Resource.Error(it.localizedMessage ?: "Something went wrong.", null)
-                    observable = Observable.just(resource)
-                }
-            )
-        return observable
-    }
+    operator fun invoke(searchQuery: String): Observable<ResponseModel> {
 
+        var imageList: List<ImageItem>? = null
+        var message: String? = null
+
+        return repository.searchImages(searchQuery)
+            .subscribeOn(Schedulers.io())
+            .map {
+                if(it.data != null) {
+                    //save data in database
+//                    it.data.map {image ->  repository.saveLocalImage(image) }
+                    imageList = it.data
+                } else {
+////                    Check if database has result of search query
+//                    var localImages: List<ImageItem>? = emptyList()
+//                        repository.searchLocalImages(searchQuery)
+//                        ?.observeOn(Schedulers.io())
+//                        ?.subscribe(
+//                            {
+//                                localImages = it
+//                            },{
+//                                localImages = null
+//                            }
+//                        )
+//                    if(localImages == null) {
+//                        message = it.message!!
+//                    } else {
+//                        //return data from database
+//                        imageList = localImages
+//                        message = it.message!!
+//                    }
+                }
+                ResponseModel(imageList, message)
+            }
+    }
 }

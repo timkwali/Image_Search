@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="imageItem"
+            type="com.timkwali.imagesearch.domain.model.ImageItem" />
+        <variable
+            name="clickHandlers"
+            type="com.timkwali.imagesearch.presentation.utils.ClickHandlers" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context=".presentation.ui.imagedetails.ImageDetailsFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_round_bg"
+                android:elevation="5dp"
+                android:onClick="@{clickHandlers::navigateBack}"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:image="@{imageItem.largeImageURL}"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="-40dp"
+                android:elevation="2dp"
+                android:background="@drawable/curved_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(imageItem.comments)}"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/effra_std_rg"
+                android:textColor="@color/black"
+                android:elevation="2dp"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:layout_constraintStart_toStartOf="@id/view"
+                app:layout_constraintEnd_toStartOf="@id/likes"
+                app:drawableTopCompat="@drawable/ic_outline_comment_24" />
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(imageItem.likes)}"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/effra_std_rg"
+                android:textColor="@color/black"
+                android:elevation="2dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:layout_constraintStart_toStartOf="@id/view"
+                app:layout_constraintEnd_toEndOf="@id/view"
+                app:drawableTopCompat="@drawable/ic_outline_favorite_border_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(imageItem.downloads)}"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/effra_std_rg"
+                android:textColor="@color/black"
+                android:elevation="2dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/likes"
+                app:layout_constraintTop_toTopOf="@id/view"
+                app:drawableTopCompat="@drawable/ic_outline_file_download_24" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:elevation="2dp"
+                android:fontFamily="@font/effra_std_rg"
+                android:text="@{imageItem.user}"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:gravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/view"
+                app:layout_constraintTop_toBottomOf="@+id/likes" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="5dp"
+                android:orientation="vertical"
+                app:chipGroup="@{imageItem.tags}"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="@id/view"
+                app:layout_constraintStart_toStartOf="@id/view"
+                app:layout_constraintTop_toBottomOf="@id/textView13"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
