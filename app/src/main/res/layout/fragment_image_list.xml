@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="clickHandlers"
+            type="com.timkwali.imagesearch.presentation.utils.ClickHandlers" />
+        <variable
             name="viewModel"
             type="com.timkwali.imagesearch.presentation.ui.imagelist.ImageListViewModel" />
     </data>
@@ -19,33 +22,33 @@
             android:id="@+id/logo"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/pixabay_logo"
-            android:scaleType="fitXY"
             android:layout_marginStart="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/pixabay_logo"
             app:layout_constraintBottom_toBottomOf="@+id/heading"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/heading"
-            app:shapeAppearanceOverlay="@style/round_image_white_bg"/>
+            app:shapeAppearanceOverlay="@style/round_image_white_bg" />
 
         <TextView
             android:id="@+id/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/effra_std_rg"
             android:text="@string/pixa_pics"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/logo"/>
+            app:layout_constraintStart_toEndOf="@id/logo"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -57,13 +60,57 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#F8F8F8"
-            android:paddingBottom="10dp"
-            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/loading_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:elevation="6dp"
+            style="@style/SpinKitView.CubeGrid"
+            app:SpinKit_Color="@color/dark_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <FrameLayout
+            android:id="@+id/no_network"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center"
+                android:src="@drawable/pixabay_logo" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/effra_std_rg"
+                android:text="@string/retry"
+                android:textAllCaps="false" />
+        </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+

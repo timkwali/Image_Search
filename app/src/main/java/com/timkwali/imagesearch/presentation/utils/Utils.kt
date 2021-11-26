@@ -1,13 +1,27 @@
 package com.timkwali.imagesearch.presentation.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.timkwali.imagesearch.R
+import com.timkwali.imagesearch.presentation.ui.imagelist.ImageListViewModel
+import android.graphics.Typeface
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
+import android.widget.Toast
+import com.timkwali.imagesearch.common.Constants
 
 fun Fragment.showSnackBar(
     message: String?,
@@ -15,6 +29,41 @@ fun Fragment.showSnackBar(
     view: View? = requireView()
 ) {
     Snackbar.make(view!!, message!!, duration).show()
+}
+
+fun searchQuery(searchView: SearchView, viewmodel: ImageListViewModel) {
+    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            viewmodel.getImageList(query.toString())
+            return false
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+    })
+}
+
+@SuppressLint("MissingPermission")
+fun isNetworkAvailable(context: Context): Boolean {
+    val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        ?: return false
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val cap = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        return cap.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val networks = cm.allNetworks
+        for (n in networks) {
+            val nInfo = cm.getNetworkInfo(n)
+            if (nInfo != null && nInfo.isConnected) return true
+        }
+    } else {
+        val networks = cm.allNetworkInfo
+        for (nInfo in networks) {
+            if (nInfo != null && nInfo.isConnected) return true
+        }
+    }
+    return false
 }
 
 fun showYesNoDialog(

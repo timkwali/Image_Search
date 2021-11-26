@@ -9,12 +9,16 @@ object Constants {
     const val emptyResultCode = 204
     const val noResourceCode = 404
     const val timeoutCode = 408
+    const val tooManyRequestsCode = 429
     const val serverErrorCode = 500
 
     const val emptyResultMessage = "The request returned an empty result."
     const val noResourceMessage = "No resource found for request."
     const val timeoutMessage = "The request timed out."
+    const val tooManyRequestsMessage = "Too many requests sent."
     const val serverErrorMessage = "Internal Server error."
     const val errorMessage = "An error occurred."
     const val noSearchResults = "There are no results for this search term. Try another one."
+
+    const val RV_CONTAINS_DATA = "RV_CONTAINS_DATA"
 }

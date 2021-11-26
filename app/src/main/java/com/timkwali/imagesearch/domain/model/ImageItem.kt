@@ -1,10 +1,13 @@
 package com.timkwali.imagesearch.domain.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.timkwali.imagesearch.data.remote.dto.Hit
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class ImageItem(
     @PrimaryKey
     val id: Int,
@@ -16,7 +19,7 @@ data class ImageItem(
     val largeImageURL: String,
     val likes: Int,
     val searchQuery: String
-)
+): Parcelable
 
 fun Hit.toImageItem(searchQuery: String): ImageItem {
     return ImageItem(

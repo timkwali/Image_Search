@@ -22,5 +22,5 @@ interface ImageSearchApi {
         @Query("id") imageId: String,
         @Query("key") apiKey: String = Constants.API_KEY,
     @Query("image_type") imageType: String = Constants.IMAGE_TYPE
-    ): Single<Response<ImageSearchDto>>
+    ): Observable<Response<ImageSearchDto>>
 }

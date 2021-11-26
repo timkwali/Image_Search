@@ -28,16 +28,10 @@ object NetworkModule {
         return retrofit.create(ImageSearchApi::class.java)
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideRepository(apiService: ImageSearchApi): ImageSearchRepository {
-//        return ImageSearchRepositoryImpl(apiService)
-//    }
-
     @Provides
     @Singleton
     fun provideRepository(apiService: ImageSearchApi, db: ImageDatabase): ImageSearchRepository {
-        return ImageSearchRepositoryImpl(apiService, db.imageItemDao)
+        return ImageSearchRepositoryImpl(apiService, db)
     }
 
 }

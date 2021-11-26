@@ -11,12 +11,13 @@
         <action
             android:id="@+id/action_imageListFragment_to_imageDetailsFragment"
             app:destination="@id/imageDetailsFragment" />
-        <argument
-            android:name="id"
-            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/imageDetailsFragment"
         android:name="com.timkwali.imagesearch.presentation.ui.imagedetails.ImageDetailsFragment"
-        android:label="ImageDetailsFragment" />
+        android:label="ImageDetailsFragment" >
+        <argument
+            android:name="imageItem"
+            app:argType="com.timkwali.imagesearch.domain.model.ImageItem" />
+    </fragment>
 </navigation>
