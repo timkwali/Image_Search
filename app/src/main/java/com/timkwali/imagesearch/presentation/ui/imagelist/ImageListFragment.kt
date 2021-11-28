@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.timkwali.imagesearch.R
@@ -24,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ImageListFragment : Fragment(), ClickListener<ImageItem> {
 
     private lateinit var binding: FragmentImageListBinding
-//    private lateinit var imageListViewModel: ImageListViewModel
     private val imageListViewModel: ImageListViewModel by activityViewModels()
     private var rvContainsData = false
 
@@ -33,31 +33,34 @@ class ImageListFragment : Fragment(), ClickListener<ImageItem> {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_image_list, container, false)
+        binding.apply {
+            viewModel = imageListViewModel
+            clickHandlers = ClickHandlers
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if(savedInstanceState == null) {
-//            imageListViewModel = imageListViewModel by activityViewModels()
-            binding.viewModel = imageListViewModel
-            binding.clickHandlers = ClickHandlers
-        }
-        searchQuery(binding.searchView, imageListViewModel)
+        binding.swipeToRefresh.setColorSchemeResources(R.color.dark_orange)
+        rvContainsData = savedInstanceState?.getBoolean(Constants.RV_CONTAINS_DATA) ?: false
         imageListViewModel.imageList.observe(viewLifecycleOwner, Observer { resource ->
-            binding.noNetwork.isVisible = !rvContainsData && resource is Resource.Error
-            binding.loadingIcon.isVisible = resource is Resource.Loading
-            if(resource is Resource.Success && resource.message != null) showSnackBar(resource.message)
-            if(resource is Resource.Error && resource.data.isNullOrEmpty()) showSnackBar(resource.message)
+            binding.apply {
+                swipeToRefresh.isRefreshing = resource is Resource.Loading
 
-            if(!resource.data.isNullOrEmpty() && resource.data[0].searchQuery == imageListViewModel.currentSearchQuery) {
-                binding.imagesListRv.also {
-                    it.layoutManager = LinearLayoutManager(requireContext())
-                    it.setHasFixedSize(true)
-                    it.adapter = ImageListRvAdapter(resource.data, this)
+                noNetwork.isVisible = !rvContainsData && resource is Resource.Error
+                if(!resource.message.isNullOrEmpty()) showSnackBar(resource.message)
+//                if(resource is Resource.Success && resource.message != null) showSnackBar(resource.message)
+//                if(resource is Resource.Error && resource.data.isNullOrEmpty()) showSnackBar(resource.message)
+
+                if(!resource.data.isNullOrEmpty() && resource.data[0].searchQuery == imageListViewModel.currentSearchQuery) {
+                    imagesListRv.also {
+                        it.layoutManager = LinearLayoutManager(requireContext())
+                        it.setHasFixedSize(true)
+                        it.adapter = ImageListRvAdapter(resource.data, this@ImageListFragment)
+                    }
+                    rvContainsData = true
                 }
-                rvContainsData = true
             }
         })
     }

@@ -50,36 +50,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@color/white"
+            app:searchQuery="@{viewModel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/heading" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imagesList_rv"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#F8F8F8"
+            app:setSwipeToRefresh="@{viewModel}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-        <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/loading_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:elevation="6dp"
-            style="@style/SpinKitView.CubeGrid"
-            app:SpinKit_Color="@color/dark_orange"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagesList_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F8F8F8" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <FrameLayout
             android:id="@+id/no_network"
@@ -104,6 +96,7 @@
             <Button
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                app:retry="@{viewModel}"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/effra_std_rg"

@@ -31,19 +31,6 @@ fun Fragment.showSnackBar(
     Snackbar.make(view!!, message!!, duration).show()
 }
 
-fun searchQuery(searchView: SearchView, viewmodel: ImageListViewModel) {
-    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-            viewmodel.getImageList(query.toString())
-            return false
-        }
-
-        override fun onQueryTextChange(newText: String?): Boolean {
-            return false
-        }
-    })
-}
-
 @SuppressLint("MissingPermission")
 fun isNetworkAvailable(context: Context): Boolean {
     val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
