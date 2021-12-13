@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.timkwali.imagesearch"
-        minSdk 23
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -99,6 +99,9 @@ dependencies {
 
     // RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:$roomVersion")
+
+    //paging3
+    implementation "androidx.paging:paging-runtime:3.0.0-alpha03"
 
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$roomVersion")

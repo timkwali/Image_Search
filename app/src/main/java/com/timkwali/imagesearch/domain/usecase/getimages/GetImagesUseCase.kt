@@ -9,12 +9,12 @@ class GetImagesUseCase @Inject constructor(
     private val repository: ImageSearchRepository
 ) {
 
-    operator fun invoke(searchQuery: String) = networkBoundResource(
+    operator fun invoke(searchQuery: String, page: Int) = networkBoundResource(
         query = {
             repository.searchLocalImages(searchQuery)
         },
         fetch = {
-            repository.searchImages(searchQuery)
+            repository.searchImages(searchQuery, page)
         },
         saveFetchResult = {
             repository.saveLocalImage(it)

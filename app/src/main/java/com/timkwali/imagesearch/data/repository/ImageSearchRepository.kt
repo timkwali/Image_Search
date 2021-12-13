@@ -11,7 +11,7 @@ import retrofit2.Response
 interface ImageSearchRepository {
 
     //REMOTE DATA
-    fun searchImages(searchQuery: String): Observable<List<ImageItem>>
+    fun searchImages(searchQuery: String, page: Int): Observable<List<ImageItem>>
 
     //LOCAL DATA
     fun searchLocalImages(searchQuery: String): Observable<List<ImageItem>>

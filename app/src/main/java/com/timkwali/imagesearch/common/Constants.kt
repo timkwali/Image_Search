@@ -4,6 +4,7 @@ object Constants {
     const val BASE_URL = "https://pixabay.com"
     const val API_KEY = "24146487-3ae0514e3d6d73cc960d1dc70"
     const val IMAGE_TYPE = "photo"
+    const val PER_PAGE = 20
 
     const val successCode = 200
     const val emptyResultCode = 204

@@ -22,6 +22,7 @@ class ImageListViewModel @Inject constructor(
     private val _imageList = MutableLiveData<Resource<List<ImageItem>>>()
     val imageList: LiveData<Resource<List<ImageItem>>> get() = _imageList
     var currentSearchQuery = "fruits"
+    var currentPage = 1
 
     init {
         getImageList(currentSearchQuery)
@@ -30,7 +31,7 @@ class ImageListViewModel @Inject constructor(
     @SuppressLint("CheckResult")
     fun getImageList(searchQuery: String) {
         currentSearchQuery = searchQuery
-        getImagesUseCase(searchQuery)
+        getImagesUseCase(searchQuery, page = currentPage)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

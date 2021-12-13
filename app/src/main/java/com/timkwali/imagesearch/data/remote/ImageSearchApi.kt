@@ -14,7 +14,9 @@ interface ImageSearchApi {
     fun searchImages(
         @Query("q") searchQuery: String,
         @Query("key") apiKey: String = Constants.API_KEY,
-        @Query("image_type") imageType: String = Constants.IMAGE_TYPE
+        @Query("image_type") imageType: String = Constants.IMAGE_TYPE,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int = Constants.PER_PAGE
     ): Observable<Response<ImageSearchDto>>
 
     @GET("/api/")

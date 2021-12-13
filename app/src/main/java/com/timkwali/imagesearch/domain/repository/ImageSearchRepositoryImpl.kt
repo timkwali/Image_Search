@@ -18,8 +18,8 @@ class ImageSearchRepositoryImpl @Inject constructor(
 ): ImageSearchRepository {
     private val imageItemDao = db.imageItemDao
 
-    override fun searchImages(searchQuery: String): Observable<List<ImageItem>> {
-        return imageSearchApi.searchImages(searchQuery)
+    override fun searchImages(searchQuery: String, page: Int): Observable<List<ImageItem>> {
+        return imageSearchApi.searchImages(searchQuery, page = page)
             .map { response ->
                 val imageList = response.body()?.hits?.map { it.toImageItem(searchQuery) }
                 val code = if(response.code() == 200 && imageList?.isEmpty() == true) 204 else response.code()
